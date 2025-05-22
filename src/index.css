@@ -12,7 +12,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
   font-family: 'Cormorant Garamond', serif;
   background-color: rgb(var(--color-bg));
   color: white;
@@ -94,4 +94,20 @@ html, body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+/* Aspect ratio utilities */
+.aspect-w-16 {
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+.aspect-w-16 > * {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
