@@ -1,0 +1,52 @@
+name: NPM dependency quality
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - package.json
+      - package-lock.json
+      - src/**
+      - .github/workflows/npm-quality.yml
+  push:
+    branches: [main]
+    paths:
+      - package.json
+      - package-lock.json
+      - src/**
+      - .github/workflows/npm-quality.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Install locked dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Block high and critical dependency advisories
+        run: npm audit --package-lock-only --audit-level=high
+      - name: Build the static review root
+        run: npm run build
+      - name: Bundle the React source graph
+        run: >-
+          node node_modules/esbuild/bin/esbuild
+          src/main.tsx
+          --bundle
+          --format=esm
+          --platform=browser
+          --outfile=/tmp/starfield-react.js
