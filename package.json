@@ -10,6 +10,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit --incremental false -p tsconfig.app.json && tsc --noEmit --incremental false -p tsconfig.node.json",
     "preview": "vite preview"
   },
   "dependencies": {

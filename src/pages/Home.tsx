@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Volume2, VolumeX } from 'lucide-react';
 import CosmicForest from '../components/CosmicForest';
 import LoadingScreen from '../components/LoadingScreen';
 import CustomCursor from '../components/CustomCursor';

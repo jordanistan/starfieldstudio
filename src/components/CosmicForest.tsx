@@ -19,19 +19,19 @@ const CosmicForest: React.FC<CosmicForestProps> = ({ audioEnabled }) => {
     if (!containerRef.current) return;
 
     // Set up the scene, camera, and renderer
-    const { scene, camera, renderer, controls, clock } = initScene(containerRef.current);
+    const { scene, camera, renderer, clock } = initScene(containerRef.current);
     
     // Add forest elements
-    const { trees, ground } = createTrees(scene);
+    createTrees(scene);
     
     // Add lighting
-    const { ambientLight, pointLights } = createLighting(scene);
+    const { pointLights } = createLighting(scene);
     
     // Add particles
     const particles = createParticles(scene);
     
     // Add post-processing effects
-    const { composer, bloomPass } = createPostProcessing(scene, camera, renderer);
+    const { composer } = createPostProcessing(scene, camera, renderer);
 
     // Mouse move handler for interactive lighting
     const handleMouseMove = (event: MouseEvent) => {
@@ -82,9 +82,6 @@ const CosmicForest: React.FC<CosmicForestProps> = ({ audioEnabled }) => {
       
       // Update camera
       handleCameraMovement(camera, mousePosition.current, elapsedTime);
-      
-      // Update controls if any
-      if (controls) controls.update();
       
       // Render
       composer.render();
