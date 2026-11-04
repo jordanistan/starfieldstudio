@@ -40,6 +40,10 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Block high and critical dependency advisories
         run: npm audit --package-lock-only --audit-level=high
+      - name: Lint the TypeScript source graph
+        run: npm run lint
+      - name: Typecheck the application and build configuration
+        run: npm run typecheck
       - name: Build the static review root
         run: npm run build
       - name: Bundle the React source graph
